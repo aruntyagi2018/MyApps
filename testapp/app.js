@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var MongoStore = require('connect-mongo')(session);
+//var MongoStore = require('connect-mongo')(session);
 
 
 var index = require('./routes/index');
@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+/*
 var sessionOptions = {
   secret: "secret",
   resave : true,
@@ -42,6 +42,7 @@ var sessionOptions = {
 };
 
 app.use(session(sessionOptions));
+*/
 
 app.use('/', index);
 app.use('/testroutes',testroutes);
