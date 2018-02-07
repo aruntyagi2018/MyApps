@@ -5,9 +5,27 @@ var uscore = require("underscore");
 var files =  require('../common/readfile.js');
 
 router.get('/users/list',(req,res) => {
-    res.json(files.readFile('./data/login.data'));
-});
+    console.log('read async file');
+    files.readFile(function(err,data){
+    if(err)
+        res.json({status:'ERROR',message:err});
 
+        res.json(data);
+    });
+});
+router.get('/users/checkuser/:userid',(req,res) => {
+    console.log('read async file');
+    console.log(req.params.userid);
+    files.checkusername(req.params.userid,function(err,data){
+    if(err)
+        res.json({status:'ERROR',message:err});
+        if(data)
+            res.json({status:'ALREADY EXISTS',message:'username is already taken'});
+        else
+            res.json({status:'AVAILABLE',message:'username is available'});
+    });
+    console.log('end method');
+});
 router.get('/users/register', function(req, res, next) {
  res.render('register');
 });
