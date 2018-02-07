@@ -5,7 +5,7 @@ var uscore = require("underscore");
 var files =  require('../common/readfile.js');
 
 router.get('/users/list',(req,res) => {
-    res.json(files.readFile());
+    res.json(files.readFile('./data/login.data'));
 });
 
 router.get('/users/register', function(req, res, next) {
@@ -21,7 +21,7 @@ router.post('/users/save',(req,res) => {
  res.render('login');
 });
 router.post('/users/validatelogin', function(req, res, next) {
-let logindata = files.readFile();
+let logindata = files.readFile('./data/login.data');
 console.log(req.body.password);
 var userdetails = uscore.where(logindata.users, {username: req.body.username,password:req.body.password});
 let loginstatus = userdetails.length ? true:false;

@@ -1,10 +1,11 @@
 var fs = require('fs');
 var files = {
-  readFile: function () {
-     //console.log('read from file');
-     let rawdata = fs.readFileSync('./data/login.data');  
-     let usersdata = JSON.parse(rawdata); 
-     return usersdata;
+  readFile: function (filepath) {
+      console.log('filepath');
+     console.log(filepath);
+     let rawdata = fs.readFileSync(filepath);  
+     let jsondata = JSON.parse(rawdata); 
+     return jsondata;
      // fs.readFile('./data/login.data', (err, data) => {  
      //     console.log('read from file');
      //  if (err)
@@ -21,7 +22,7 @@ var files = {
       //return logindata;
   },
   writeFile: function (userdata) {
-    let filedata =  files.readFile();
+    let filedata =  files.readFile('./data/login.data');
     filedata.users.push(userdata);
     fs.writeFileSync('./data/login.data', JSON.stringify(filedata));  
   }
