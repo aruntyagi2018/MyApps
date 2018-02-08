@@ -3,11 +3,12 @@ var router = express.Router();
 var files =  require('../common/lib.js');
 
 router.get('/list',function(req,res){
-    var products = files.readFile('./data/products.data');
-    var top4 = products.results.sort(function(a, b) { return a.Variable1 < b.Variable1 ? 1 : -1; })
-                .slice(0, 4);
-                console.log(top4);
-     res.json(top4);
+   files.getTop4Products(function(err,top4products){
+        if(err)
+            res.json({status:'ERROR',message:'error while retrieving top 4 products'}); 
+        
+        res.json(top4products);
+    });
 });
 
 module.exports = router;

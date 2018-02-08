@@ -1,6 +1,7 @@
 var fs = require('fs');
 var loginfile = './data/login.data';
-var files = {
+var productfile = './data/product.data';
+var users = {
   getUsers: function (callback) {
      fs.readFile(loginfile, (err, data) => {  
       if (err)
@@ -13,7 +14,7 @@ var files = {
   checkusername : function(username,callback)
   {
      console.log('inside checkuser');
-      files.getUsers(function(err,data)
+      users.getUsers(function(err,data)
       {
         console.log('inside read file');
         let userexists = false;
@@ -28,7 +29,7 @@ var files = {
       });
   },
   saveUsers: function (userdata,cb) {
-    files.checkusername(userdata.username,function(err,userexists,data){
+    users.checkusername(userdata.username,function(err,userexists,data){
       console.log(userexists);
       if (err)
         cb(err,'ERROR');
@@ -49,4 +50,18 @@ var files = {
     });
   }
 };
-module.exports = files;
+var products= {
+  getTop4Products: function (callback) {
+     fs.readFile(productfile, (err, products) => {  
+      if (err)
+      {
+        callback(err,undefined);
+      } 
+     let top4 =products.results.sort(function(a, b) { return a.Variable1 < b.Variable1 ? 1 : -1; })
+                .slice(0, 4);
+      console.log(top4);
+      callback(undefined,JSON.parse(top4));
+     });
+  },
+};
+module.exports = {users,products};

@@ -2,11 +2,13 @@
 var express = require('express');
 var router = express.Router();
 var uscore = require("underscore");
-var files =  require('../common/lib.js');
+///import {users} from '../common/lib.js';
+
+var users =  require('../common/lib.js');
 
 router.get('/users/list',(req,res) => {
     console.log('read async file');
-    files.getUsers(function(err,data){
+    users.getUsers(function(err,data){
     if(err)
         res.json({status:'ERROR',message:err});
 
@@ -14,7 +16,7 @@ router.get('/users/list',(req,res) => {
     });
 });
 router.get('/users/checkuser/:userid',(req,res) => {
-    files.checkusername(req.params.userid,function(err,data){
+    users.checkusername(req.params.userid,function(err,data){
     if(err)
         res.json({status:'ERROR',message:err});
         if(data)
@@ -33,7 +35,7 @@ router.post('/users/save',(req,res) => {
         password : req.body.password,
         email : req.body.email
     };
-    files.saveUsers(user,function(err,status){
+    users.saveUsers(user,function(err,status){
       if (err)
         res.json({status: 'ERROR',message : 'error while saving user'});
       else if(status === 'EXISTS')
