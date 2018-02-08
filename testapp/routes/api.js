@@ -2,11 +2,11 @@
 var express = require('express');
 var router = express.Router();
 var uscore = require("underscore");
-var files =  require('../common/readfile.js');
+var files =  require('../common/lib.js');
 
 router.get('/users/list',(req,res) => {
     console.log('read async file');
-    files.readFile(function(err,data){
+    files.getUsers(function(err,data){
     if(err)
         res.json({status:'ERROR',message:err});
 
@@ -14,8 +14,6 @@ router.get('/users/list',(req,res) => {
     });
 });
 router.get('/users/checkuser/:userid',(req,res) => {
-    console.log('read async file');
-    console.log(req.params.userid);
     files.checkusername(req.params.userid,function(err,data){
     if(err)
         res.json({status:'ERROR',message:err});
@@ -24,15 +22,27 @@ router.get('/users/checkuser/:userid',(req,res) => {
         else
             res.json({status:'AVAILABLE',message:'username is available'});
     });
-    console.log('end method');
 });
 router.get('/users/register', function(req, res, next) {
  res.render('register');
 });
 
 router.post('/users/save',(req,res) => {
-    files.writeFile(req.body);
-    res.redirect('/api/users/list');
+    var user = {
+        username : req.body.username,
+        password : req.body.password,
+        email : req.body.email
+    };
+    files.saveUsers(user,function(err,status){
+      if (err)
+        res.json({status: 'ERROR',message : 'error while saving user'});
+      else if(status === 'EXISTS')
+        res.json({status: 'EXISTS',message : 'user already exists'});
+        else
+      res.redirect('/api/users/list');
+      
+    });
+   
 
 });
  router.get('/users/login', function(req, res, next) {

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var files =  require('../common/readfile.js');
+var files =  require('../common/lib.js');
 
 router.get('/list',function(req,res){
     var products = files.readFile('./data/products.data');
