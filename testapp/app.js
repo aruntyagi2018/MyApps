@@ -13,6 +13,7 @@ var testroutes = require('./routes/testroutes');
 var users = require('./routes/users');
 var api = require('./routes/api');
 var products = require('./routes/product');
+var mtunes = require('./routes/mtunes');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret:'ssshhh'}));
 app.use(express.static(path.join(__dirname, 'public')));
 /*
 var sessionOptions = {
@@ -45,12 +47,26 @@ var sessionOptions = {
 
 app.use(session(sessionOptions));
 */
+// function checkAuth (req, res, next) {
+// 	console.log('checkAuth ' + req.url);
 
+// 	// don't serve /secure to those not logged in
+// 	// you should add to this list, for each and every secure url
+// 	if (req.url != '/api/users/login' && (!req.session || !req.session.authenticated)) {
+//     console.log('secure url' + req.url);
+// 		res.redirect('/api/users/login');
+// 		return;
+// 	}
+
+// 	next();
+// }
+//app.use(checkAuth);
 app.use('/', index);
 app.use('/testroutes',testroutes);
 app.use('/users', users);
 app.use('/api',api);
 app.use('/products',products);
+app.use('/mtunes',mtunes);
 
 
 // catch 404 and forward to error handler
