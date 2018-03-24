@@ -14,4 +14,18 @@ $(function(){
     }
   });
 });
+
+$('.add-favourites').click(function(){
+  alert('hi');
+  var favItemid = $(this).id;
+  alert(favItemid);
+$.ajax({
+
+url: 'http://localhost:3000/mtunes/addfav/' + favItemid,
+type: 'GET',
+success : function(data) {
+  alert(data);
+}
+});
+});
 });

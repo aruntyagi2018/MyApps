@@ -12,4 +12,33 @@
       </div>
    </div>
    <p></p>
+   <div id="resultsBlock" class="row">
+       {{#each favitems}}
+    <div class="col-12 col-md-6 col-lg-4">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col col-sm-4">
+                          <img src="{{favitem.artworkUrl100}}" class="img-thumbnail" alt="Card cap">
+                          </div>
+                          <div class="col col-sm-8">
+                              <p class="price text-left text-truncate" title="{{favitem.artistName}}">{{favitem.artistName}}</p>
+                              <p class="name text-left">{{favitem.currency}} {{favitem.collectionPrice}}</p>
+                          </div></div>
+                          <div class="card-text text-truncate" title="{{favitem.collectionName}}">{{favitem.collectionName}}</div>
+                          <div class="row"><div class="col col-sm-4">
+                            <a class="badge badge-primary" href="{{favitem.collectionViewUrl}}" target="_blank">View details</a>
+                            </div>
+                            <div class="add-favourites col col-sm-8"><a class="badge badge-success add-fav" href="/mtunes/addfav/{{trackId}}" id="{{trackId}}">Add to favourites</a>
+                            </div>
+                            <div class="remove-favourites col col-sm-8">
+                                <a class="badge badge-danger" href="#814424794" id="814424794">
+                                    No more my favourite</a>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>  
+    {{/each}}
+   </div>
 </div>
