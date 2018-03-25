@@ -11,14 +11,15 @@ $(function(){
         var template = Handlebars.compile(source);
         var html = template(data);
        $("#resultsBlock").html(html);
+       addFav();
     }
   });
 });
+});
 
-$('.add-favourites').click(function(){
-  alert('hi');
-  var favItemid = $(this).id;
-  alert(favItemid);
+function addFav(){
+$('.add-fav').click(function(){
+  var favItemid = $(this).attr('id')
 $.ajax({
 
 url: 'http://localhost:3000/mtunes/addfav/' + favItemid,
@@ -28,4 +29,4 @@ success : function(data) {
 }
 });
 });
-});
+}

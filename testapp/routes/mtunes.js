@@ -30,14 +30,22 @@ router.get('/favourites',function(req,res,next){
   //res.render('mtunes-favourites',{layout : 'masterLayout'});
 });
 router.get('/addfav/:itemId',function(req,res,next){
-  const strTrackId = req.params.itemId;
-console.log(strTrackId);
-const mtunesdata = req.session.mtunesdata;
-console.log(mtunesdata);
-console.log(strTrackId);
-var trackdata = uscore.where(mtunesdata,{trackId:strTrackId});
-console.log(trackdata);
-
+  const strTrackId = parseInt(req.params.itemId);
+  console.log(strTrackId);
+  const mtunesdata = req.session.mtunesdata;
+  var trackdata = uscore.where(mtunesdata,{trackId:strTrackId})[0];
+  console.log(trackdata);
+  let favitem= {"username": "arun","favitem": trackdata};
+  console.log(favitem);
+  files.writeFileMtunes(favitem,'./data/mtunes.data',function(){
+      files.readFile('./data/mtunes.data',function(err,data){
+    console.log(data);
+     res.send({status : 'SUCCESS'});
+   // res.render('mtunes-favourites',{layout:'masterLayout',favitems : data});
+   });
+  });
+  
+ 
 
 });
 module.exports = router;

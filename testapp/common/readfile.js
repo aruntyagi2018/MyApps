@@ -33,6 +33,18 @@ var files = {
     let filedata = files.readFile(filepath); //files.readFile('./data/login.data');
     filedata.users.push(userdata);
     fs.writeFileSync(filepath, JSON.stringify(filedata));  
+  },
+  writeFileMtunes: function (data,filepath,cb) {
+    files.readFile(filepath,function(err,mtunesdata){
+      console.log('write file');
+      console.log(mtunesdata);
+      mtunesdata.push(data);
+      console.log('after push');
+      console.log(JSON.stringify(mtunesdata));
+      fs.writeFileSync(filepath, JSON.stringify(mtunesdata));  
+      cb();
+    }); 
+    
   }
 };
 module.exports = files;
